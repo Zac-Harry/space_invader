@@ -21,3 +21,7 @@ def AfficherFenetre(self):
     self.score_label=tk.Label(self.main , text="Score : "+ str(self.score) )
     self.score_label.pack(side=tk.RIGHT) 
 
+
+
+
+
