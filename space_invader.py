@@ -5,7 +5,7 @@ fen_princ = tk.Tk()
 
 fen_princ.title("SPACE INVADER")
 
-fen_princ.geometry("600x600")
+fen_princ.geometry("1000x1000")
 
 
 monCanvas = tk.Canvas(fen_princ, width=500, height=500, bg='ivory')

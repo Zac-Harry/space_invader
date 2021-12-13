@@ -10,7 +10,7 @@ class fen():
         self.canvas_larg = "700" 
         self.score = 0    
         self.score_label = ""
-        self.AfficherFenetre()
+        #self.AfficherFenetre()
 
 def AfficherFenetre(self):
     self.main=tk.Tk()
