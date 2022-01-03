@@ -50,6 +50,15 @@ class fen():
         self.canvas.after(50,self.deplacer)
         return     
         exit()
+    def rejouer(self):
+        self.main.destroy()
+        self.__init__()
+        self.AfficherFenetre()
+    def creevaisseau(self):
+        self.haut=vs.ymax-vs.ymin
+        self.larg=vs.larg
+        self.vaisseau = self.canvas.create_rectangle(self.haut,self.larg)
+    
 
 MW = fen()
 MW.AfficherFenetre()
