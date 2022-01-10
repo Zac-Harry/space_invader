@@ -1,6 +1,6 @@
 import tkinter as tk
 from vaisseau import vaisseau
-
+from projectile import projectile 
 
 class fen():
     def __init__(self):
@@ -50,5 +50,10 @@ class fen():
     def deplacer(self):
          self.canvas.coords(self.corps_vaisseau,self.vaisseau.x1,self.vaisseau.y1,self.vaisseau.x2,self.vaisseau.y2)
          self.main.after(10, self.deplacer) 
+    def GenererProjectile(self,x,y,color): 
+        self.projectile1 = projectile(self.canvas_haut,self.canvas_larg,x,y,color)
+        self.affichage_projectile=self.canvas.create_rectangle(self.projectile1.x1,self.projectile1.y1,self.projectile1.x2,self.projectile1.y2, fill=self.projectile.couleur)
+
+
 MW = fen()
 MW.AfficherFenetre()
