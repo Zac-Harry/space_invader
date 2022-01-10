@@ -17,8 +17,18 @@ class vaisseau():
         self.haut= self.x2 - self.x1
         self.larg = self.y2 - self.y1    
         self.vit_hor = 20
-    def droite(self,ok):
-        self.x2=self.x2+self.vit_hor
-        self.x1=self.x1+self.vit_hor
-        ok
+
+    def droite(self,event):
+        if self.x2 <=self.canvas_haut-10:
+            self.x2=self.x2+self.vit_hor
+            self.x1=self.x1+self.vit_hor
+        
+        pass
+
+
+    def gauche(self, event):
+        if self.x1 >= 0:
+            self.x2=self.x2-self.vit_hor
+            self.x1=self.x1-self.vit_hor
+        pass
 

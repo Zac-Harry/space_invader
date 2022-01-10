@@ -1,6 +1,5 @@
 import tkinter as tk
 from vaisseau import vaisseau
-from block import block                
 
 class fen():
     def __init__(self):
@@ -32,10 +31,10 @@ class fen():
         boutonPA = tk.Button(self.main , text='Rejouer' , command=self.rejouer)
         boutonPA.pack()
         self.creevaisseau()
-        #self.main.bind("<Left>", self.vaisseau.gauche)
+        self.main.bind("<Left>", self.vaisseau.gauche)
         self.main.bind("<Right>", self.vaisseau.droite)
         self.deplacer()
-        self.creeblock()
+        
         tk.mainloop()
 
 
@@ -54,7 +53,6 @@ class fen():
         self.corps_block=self.canvas.create_rectangle(self.block.x1,self.block.y1,self)
     def deplacer(self):
          self.canvas.coords(self.corps_vaisseau,self.vaisseau.x1,self.vaisseau.y1,self.vaisseau.x2,self.vaisseau.y2)
-
-
+         self.main.after(10, self.deplacer) 
 MW = fen()
 MW.AfficherFenetre()
