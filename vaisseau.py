@@ -1,27 +1,17 @@
-#   CPE Lyon - 3ETI
 
-#   Auteurs : Lucas ROTH | Romain GAUD
-
-#   Date : 1/5/2021
-
-#   Matiere : CS DEV
-
-#   TP : 3
-
-#   Objectif : Creer une classe qui gere les coordonnes du vaisseau
 
 import tkinter as tk
 
 class vaisseau():
-    def __init__(self, canvas_len, canvas_hei):
+    def __init__(self, canvas_len, canvas_largeur):
         self.canvas_len = int(canvas_len)  #Recupere la longueur du canvas
-        self.canvas_hei = int(canvas_hei)  #Recupere la hauteur du canvas
+        self.canvas_largeur = int(canvas_largeur)  #Recupere la hauteur du canvas
 
         #Definition du carre a partir de coordonnes des points 1 (Coord x1 y1) et 2 (Coord x2 y2)
         self.x1 = 400
-        self.y1 = self.canvas_hei - 51
+        self.y1 = self.canvas_largeur - 51
         self.x2 = 500
-        self.y2 = self.canvas_hei - 1
+        self.y2 = self.canvas_largeur - 1
 
         self.len = self.x2 - self.x1
         self.hei = self.y2 - self.y1

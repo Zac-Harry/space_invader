@@ -1,14 +1,3 @@
-#   CPE Lyon - 3ETI
-
-#   Auteurs : Lucas ROTH | Romain GAUD
-
-#   Date : 1/5/2021
-
-#   Matiere : CS DEV
-
-#   TP : 3
-
-#   Objectif : Creer une classe qui permet d'afficher le jeu grace a TKinter et aussi gerer les evenements tels que les collisions...
 
 import tkinter as tk
 from alien import alien
@@ -23,8 +12,8 @@ class fen():
     def __init__(self):
     
         self.main = ""                                #Definition de la fenetre principale
-        self.main_len = "1600"                        #longueur de la fenetre
-        self.main_hei = "900"                         #largeur de la fenetre
+        self.main_longeur = "1600"                        #longueur de la fenetre
+        self.main_largeur = "900"                         #largeur de la fenetre
 
         #REGLAGES JEU
         self.coeff_aleatoire = 150                    #Regler ici la probabilite qu'un alien tire ex si = 10, l'alien a 1 chance sur 10 de tirer
@@ -36,8 +25,8 @@ class fen():
 
         #CANVAS
         self.canvas = ""                              #Defintion de la variable du canvas
-        self.canvas_len = "1280"                      #Definition de la longueur du canvas
-        self.canvas_hei = "700"                       #Definition de la hauteur du canvas
+        self.canvas_longeur = "1280"                      #Definition de la longueur du canvas
+        self.canvas_largeur = "700"                       #Definition de la hauteur du canvas
     
         #ALIENS 
 
@@ -69,13 +58,13 @@ class fen():
         self.block_hei = 50
 
         #Definit la position y des blocks
-        self.y1_bl = int(self.canvas_hei) - 100 - self.block_hei
-        self.y2_bl = int(self.canvas_hei) - 100
+        self.y1_bl = int(self.canvas_largeur) - 100 - self.block_hei
+        self.y2_bl = int(self.canvas_largeur) - 100
         
                        
         
         #Creation des caracteristiques du vaisseau
-        self.vaisseau = vaisseau(self.canvas_len,self.canvas_hei)
+        self.vaisseau = vaisseau(self.canvas_longeur,self.canvas_largeur)
         self.corps_vaisseau = ""
 
         #Dictionaires des projectiles et de leur corps (obj canvas)
@@ -90,11 +79,11 @@ class fen():
         """Commande d'affichage de la fentetre"""
         
         self.main =tk.Tk() 
-        self.main.geometry(self.main_len+"x"+self.main_hei)       #Definit la geometrie de la fenetre   
+        self.main.geometry(self.main_longeur+"x"+self.main_largeur)       #Definit la geometrie de la fenetre   
 
         #Ici le canvas
         
-        self.canvas = tk.Canvas(self.main, width = self.canvas_len, height = self.canvas_hei , bg ='black')
+        self.canvas = tk.Canvas(self.main, width = self.canvas_longeur, height = self.canvas_largeur , bg ='black')
         self.canvas.pack()
         self.background = tk.PhotoImage(file="fond.png")
         self.canvas.create_image(0, 0, image=self.background, anchor='nw')
@@ -200,8 +189,8 @@ class fen():
         #_
 
         for i in range(self.nb_blocks):
-            posX1 = (int(self.canvas_len)/self.nb_blocks)*i
-            posX2 = (int(self.canvas_len)/self.nb_blocks)*(i+1)
+            posX1 = (int(self.canvas_longeur)/self.nb_blocks)*i
+            posX2 = (int(self.canvas_longeur)/self.nb_blocks)*(i+1)
 
             self.random = random.randint(0,self.coeff_block_inv)        #Genere un nombre aleatoire permettant de savoir si l'alien va tirer
             if self.random == 1:
@@ -236,15 +225,15 @@ class fen():
         for i in range(self.nombre_aliens):
 
             #Etablit les limites des cadres dans lequelles les aliens peuvent circuler
-            mini = (int(self.canvas_len)/self.nombre_aliens)*i
-            maxi = (int(self.canvas_len)/self.nombre_aliens)*(i+1)
+            mini = (int(self.canvas_longeur)/self.nombre_aliens)*i
+            maxi = (int(self.canvas_longeur)/self.nombre_aliens)*(i+1)
 
             xinf = mini + (maxi-mini)/3         #Position initiale du point x1
             xsup = mini + ((maxi-mini)*2)/3     #Position intitale du point x2
 
             #Genere l'esprit de l'alien
-            alien_att = alien(self.canvas_len,self.canvas_hei,xinf,y1_att,xsup,y2_att,"black",mini,maxi)
-            alien_def = alien(self.canvas_len,self.canvas_hei,xinf,y1_def,xsup,y2_def,"red",mini,maxi)
+            alien_att = alien(self.canvas_longeur,self.canvas_largeur,xinf,y1_att,xsup,y2_att,"black",mini,maxi)
+            alien_def = alien(self.canvas_longeur,self.canvas_largeur,xinf,y1_def,xsup,y2_def,"red",mini,maxi)
 
             #Genere le corps de l'alien
             corps_alien_def = self.canvas.create_rectangle(alien_def.x1,alien_def.y1,alien_def.x2,alien_def.y2, fill = alien_def.color_fill)
@@ -273,7 +262,7 @@ class fen():
         #_
 
         #Genere un projectile sur le canvas
-        projectile1 = projectile(self.canvas_len,self.canvas_hei,x,y, tir_ami,color)
+        projectile1 = projectile(self.canvas_longeur,self.canvas_largeur,x,y, tir_ami,color)
         corps_projectile = self.canvas.create_rectangle(projectile1.x1,projectile1.y1,projectile1.x2,projectile1.y2, fill=projectile1.color)
         
         id_proj = self.GenererId(self.projectiles)                                            #Genere l'id du projectile
@@ -365,11 +354,11 @@ class fen():
     def VerifCoord(self):
   
         if self.VerifGagne():                                       #Si on detruit tout les aliens on arrete le jeu
-            self.canvas.create_text(int(self.canvas_len)/2,int(self.canvas_hei)/2,fill="gold",font="Times 100 italic bold",text="Winner")
+            self.canvas.create_text(int(self.canvas_longeur)/2,int(self.canvas_largeur)/2,fill="gold",font="Times 100 italic bold",text="Winner")
             return False
 
         elif self.VerifPositionAlien():                                 
-            self.canvas.create_text(int(self.canvas_len)/2,int(self.canvas_hei)/2,fill="red",font="Times 100 italic bold",text="PERDU")
+            self.canvas.create_text(int(self.canvas_longeur)/2,int(self.canvas_largeur)/2,fill="red",font="Times 100 italic bold",text="PERDU")
             return False
 
         elif self.projectiles != {}:
@@ -413,7 +402,7 @@ class fen():
 
                             else:                                                                #Si le vaisseau n'as plus de vie, arreter le jeu et afficher perdu
                                 #Ecriture du message perdu
-                                self.canvas.create_text(int(self.canvas_len)/2,int(self.canvas_hei)/2,fill="red",font="Times 100 italic bold",text="PERDU")
+                                self.canvas.create_text(int(self.canvas_longeur)/2,int(self.canvas_largeur)/2,fill="red",font="Times 100 italic bold",text="PERDU")
                                 
                                 return False                                                     #Arrete le jeu
                 else:

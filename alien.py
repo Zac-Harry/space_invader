@@ -1,22 +1,11 @@
 
-#   CPE Lyon - 3ETI
-
-#   Auteurs : Lucas ROTH | Romain GAUD
-
-#   Date : 1/5/2021
-
-#   Matiere : CS DEV
-
-#   TP : 3
-
-#   Objectif : Creer une classe qui gere la "conscience" de l'alien: comment il se deplace, ect...
 
 import tkinter as tk
 
 class alien():
-    def __init__(self, canvas_len,canvas_hei,posX1,posY1,posX2,posY2,color,min,max):
+    def __init__(self, canvas_len,canvas_largeur,posX1,posY1,posX2,posY2,color,min,max):
         self.canvas_len = canvas_len  #Recupere la longueur du canvas
-        self.canvas_hei = canvas_hei  #Recupere la hauteur du canvas
+        self.canvas_largeur = canvas_largeur  #Recupere la hauteur du canvas
 
         self.min=min  #Créer le min de la zone où se situe l'alien
         self.max=max  #Créer le max de la zone où se situe l'alien
@@ -58,7 +47,7 @@ class alien():
             else:
                 self.positif = True
                 self.DeplacerDroit()
-                if int(self.canvas_hei) > (self.y2 + self.vit_deplacer_ver):
+                if int(self.canvas_largeur) > (self.y2 + self.vit_deplacer_ver):
                     self.DeplacerBas()
             
     def DeplacerDroit(self):

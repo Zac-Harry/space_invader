@@ -1,19 +1,8 @@
-#   CPE Lyon - 3ETI
-
-#   Auteurs : Lucas ROTH | Romain GAUD
-
-#   Date : 1/5/2021
-
-#   Matiere : CS DEV
-
-#   TP : 3
-
-#   Objectif : Creer la classe qui gere les coordonnes du projectile
 
 class projectile():
-    def __init__(self,canvas_len, canvas_hei, objet_x, objet_y, tir_ami,color):
+    def __init__(self,canvas_len, canvas_largeur, objet_x, objet_y, tir_ami,color):
         self.canvas_len = canvas_len                          #Recupere la longueur du canvas
-        self.canvas_hei = canvas_hei                          #Recupere la hauteur du canvas
+        self.canvas_largeur = canvas_largeur                          #Recupere la hauteur du canvas
 
         self.tir_ami = tir_ami                                #True = Tir ami
 
@@ -63,7 +52,7 @@ class projectile():
             else:
                 self.etat = False
         else:
-            if int(self.canvas_hei) > (self.y2 + self.deplacer_vit):
+            if int(self.canvas_largeur) > (self.y2 + self.deplacer_vit):
                 self.DeplacerBas()
             else:
                 self.etat = False
