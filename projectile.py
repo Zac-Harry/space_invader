@@ -1,16 +1,16 @@
 
 class projectile():
     def __init__(self,canvas_len, canvas_largeur, objet_x, objet_y, tir_ami,color):
-        self.canvas_len = canvas_len                          #Recupere la longueur du canvas
-        self.canvas_largeur = canvas_largeur                          #Recupere la hauteur du canvas
+        self.canvas_len = canvas_len                          #On recupere la longueur du canvas
+        self.canvas_largeur = canvas_largeur                          #On recupere la hauteur du canvas
 
         self.tir_ami = tir_ami                                #True = Tir ami
 
         self.etat = True
 
-        self.largeur = 6                                      #Definit la largeur du projectile
-        self.longueur = 10                                     #Definit la longeur du projectile
-        self.color = color                                   #Definit la couleur du projectile
+        self.largeur = 6                                      #On definit la largeur du projectile
+        self.longueur = 10                                     #On definit la longeur du projectile
+        self.color = color                                   #On definit la couleur du projectile
 
         self.deplacer_vit = 4                                 #Vitesse de deplacment du missile
 

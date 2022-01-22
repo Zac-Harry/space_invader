@@ -4,8 +4,8 @@ import tkinter as tk
 
 class alien():
     def __init__(self, canvas_len,canvas_largeur,posX1,posY1,posX2,posY2,color,min,max):
-        self.canvas_len = canvas_len  #Recupere la longueur du canvas
-        self.canvas_largeur = canvas_largeur  #Recupere la hauteur du canvas
+        self.canvas_len = canvas_len  #On recupere la longueur du canvas
+        self.canvas_largeur = canvas_largeur  #On recupere la hauteur du canvas
 
         self.min=min  #Créer le min de la zone où se situe l'alien
         self.max=max  #Créer le max de la zone où se situe l'alien
@@ -13,7 +13,7 @@ class alien():
         #Corps de l'alien
         self.corps_alien = ""
 
-        #Definition du carre a partir de coordonnes des points 1 (Coord x1 y1) et 2 (Coord x2 y2)
+        #On definit le carre a partir de coordonnes des points 1 (Coord x1 y1) et 2 (Coord x2 y2)
         self.x1 = posX1
         self.y1 = posY1
         self.x2 = posX2
@@ -65,7 +65,7 @@ class alien():
     def CalculerCentre(self):
         return (self.x1 + (self.x2 - self.x1)/2) , (self.y1 + (self.y2 - self.y1)/2)
 
-    #LEs prochaines fonctions vont etablir si il ya collision ou non
+    #Les prochaines fonctions vont etablir si il existe une collision
     def IsColliding(self,Points):
         """Fonctionne en utilisant des coordones sous forme de tupples"""
 

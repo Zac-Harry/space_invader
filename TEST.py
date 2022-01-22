@@ -11,34 +11,34 @@ import random
 class fen():
     def __init__(self):
     
-        self.main = ""                                #Definition de la fenetre principale
-        self.main_longeur = "1600"                        #longueur de la fenetre
-        self.main_largeur = "900"                         #largeur de la fenetre
+        self.main = ""                                #Mise en place de la fenetre principale
+        self.main_longeur = "1600"                        #definition de sa longueur de la fenetre
+        self.main_largeur = "900"                         #definition de sa largeur de la fenetre
 
         #REGLAGES JEU
-        self.coeff_aleatoire = 150                    #Regler ici la probabilite qu'un alien tire ex si = 10, l'alien a 1 chance sur 10 de tirer
+        self.coeff_aleatoire = 150                    #Probabilitée de tire d'un alien. Ici 1 chance sur 150
         self.coeff_joueur = 2                         #Probabilite que le tir se declanche  mieux vaut ne pas y toucher.   
-        self.score = 0                                #Definition du score
-        self.vies = 3                                 #Definition du nombre de vies
-        self.vies_label= ""                           #Definition du label ou est inscrit la vie
+        self.score = 0                                #On definit le score
+        self.vies = 3                                 #On definit le nombre de vie du joueru
+        self.vies_label= ""                           #On definit le label ou est inscrit la vie restante
         self.score_label = ""
 
         #CANVAS
-        self.canvas = ""                              #Defintion de la variable du canvas
-        self.canvas_longeur = "1280"                      #Definition de la longueur du canvas
-        self.canvas_largeur = "700"                       #Definition de la hauteur du canvas
+        self.canvas = ""                              #On etablis les variables du canvas 
+        self.canvas_longeur = "1280"                      #Definition de la longueur
+        self.canvas_largeur = "700"                       #Definition de la hauteur
     
         #ALIENS 
 
         self.nombre_aliens = 8                       #Nombre d'aliens par lignes
         self.nb_al_dep = 2*self.nombre_aliens
 
-        #Creation des dictionaires des esprits des aliens
+        #On crée les dictionnaires pour les caractéristiques "morales" des aliens 
         
-        self.aliens_att={}                            #Dictionnaire contennat tout les aliens d'attaque(peuvent tirer)
-        self.aliens_def={}                            #Dictionnaire contennat tout les aliens de defense (ne peuvent pas tirer)
+        self.aliens_att={}                            #Dictionnaire contennat tout les aliens pouvant tirer
+        self.aliens_def={}                            #Dictionnaire contennat tout les aliens ne pouvant pas tirer
         
-        #Creation des dictionaires contenant les corps des aliens (corps au sens d'objets canvas)
+        #On crée les dictionnaires pour les caractéristiques "physique" des aliens
         self.corps_aliens_att={}
         self.corps_aliens_def={}
 
@@ -52,22 +52,21 @@ class fen():
         self.blocks = {}
         self.corps_blocks={}
         self.id_bl_suppr = []
-        self.coeff_block_inv = 3                      #Chance que le bloc soit invinsible
-
+        self.coeff_block_inv = 3                      #Probabilitée que le block sois invisible
         #Hauteur des blocks
         self.block_hei = 50
 
-        #Definit la position y des blocks
+        #On definit la position y des blocks
         self.y1_bl = int(self.canvas_largeur) - 100 - self.block_hei
         self.y2_bl = int(self.canvas_largeur) - 100
         
                        
         
-        #Creation des caracteristiques du vaisseau
+        #On crée les caractéristique du vaisseau
         self.vaisseau = vaisseau(self.canvas_longeur,self.canvas_largeur)
         self.corps_vaisseau = ""
 
-        #Dictionaires des projectiles et de leur corps (obj canvas)
+        #On crée le dictionaires des projectiles et de leur corps (obj canvas)
         self.projectiles = {}
         self.corps_projectiles = {}
         self.limite_aliens = self.y1_bl 
@@ -79,7 +78,7 @@ class fen():
         """Commande d'affichage de la fentetre"""
         
         self.main =tk.Tk() 
-        self.main.geometry(self.main_longeur+"x"+self.main_largeur)       #Definit la geometrie de la fenetre   
+        self.main.geometry(self.main_longeur+"x"+self.main_largeur)       #On definit la geometrie de la fenetre   
 
         #Ici le canvas
         
@@ -88,11 +87,11 @@ class fen():
         self.background = tk.PhotoImage(file="fond.png")
         self.canvas.create_image(0, 0, image=self.background, anchor='nw')
 
-        self.GenererAliens()                                                  #Genere les aliens
-        self.GenererVaisseau()                                                #Genere le vaisseau
+        self.GenererAliens()                                                  #On genere les aliens
+        self.GenererVaisseau()                                                #On genere le vaisseau
         self.GenererBlocks()
 
-        #Lie les touches du clavier au canvas:
+        #On lie les touches du clavier au canvas:
 
         #Permet de bouger en apuyant sur les fleches
         self.main.bind("<Left>", self.vaisseau.MoveLeft)
@@ -131,7 +130,7 @@ class fen():
         """Permet de deplacer les differents objects et de mettre a jour le texte"""
         #
 
-        #Mise a jour du nombre de vies et du score
+        #On mets a jour le nombre de vies et le score
         nb_aliens = len(self.aliens_att) + len(self.aliens_def)
         self.score = abs(nb_aliens - self.nb_al_dep)*100
         self.vies_label['text'] = "Vies : " + str(self.vies)
@@ -141,22 +140,22 @@ class fen():
 
             self.SupprimerMorts()                                               #Permet de supprimer les objets detruits
             
-            #Mettre ici la fonctionn qui permet de modifier les coordonnes
+            #Fonction modificatrice des coordonnés
             for id in self.aliens_att.keys():
                 self.aliens_att[id].ModifierCoord()
             for id in self.aliens_def.keys():
                 self.aliens_def[id].ModifierCoord()
 
 
-            #Mettre ici les fonctions qui permettent a l'alien de tirer
+            #Fonction permettant à l'alien de tirer
             for id in self.aliens_att.keys():
-                self.random = random.randint(0,self.coeff_aleatoire)        #Genere un nombre aleatoire permettant de savoir si l'alien va tirer
+                self.random = random.randint(0,self.coeff_aleatoire)        #On genere un nombre aleatoire permettant de savoir si l'alien va tirer
                 if self.random == 1:
                     x,y = self.aliens_att[id].CalculerCentre()
                     self.GenererProjectile(False,x,y,'red')
 
 
-            #Mettre ici la modification de l'objet du canvas
+            #Modification de l'objet du canvas
             #_
 
             #Deplacement des aliens d'attaques
@@ -181,7 +180,7 @@ class fen():
             self.main.after(10, self.deplacer)
 
 
-    #Mettre ici les fonctions afficher
+    #Fonctions afficher
     #
     def GenererBlocks(self):
     
@@ -192,7 +191,7 @@ class fen():
             posX1 = (int(self.canvas_longeur)/self.nb_blocks)*i
             posX2 = (int(self.canvas_longeur)/self.nb_blocks)*(i+1)
 
-            self.random = random.randint(0,self.coeff_block_inv)        #Genere un nombre aleatoire permettant de savoir si l'alien va tirer
+            self.random = random.randint(0,self.coeff_block_inv)        
             if self.random == 1:
                 invincible = True
                 color = '#585e5d'
@@ -203,10 +202,10 @@ class fen():
             block1 = block(posX1,self.y1_bl,posX2,self.y2_bl,invincible,color)
             corps_block = self.canvas.create_rectangle(block1.x1,block1.y1,block1.x2,block1.y2,fill = block1.color_fill)
             
-            #Genere l'identite du block
+            #On genere l'identite du block
             id_blc = self.GenererId(self.blocks)
 
-            #Ajoute le blocks aux dictionaires
+            #%On ajoute le blocks aux dictionaires
             self.blocks[id_blc] = block1
             self.corps_blocks[id_blc] = corps_block
 
@@ -215,7 +214,7 @@ class fen():
         '''Genere les aliens de defense et d'attaque'''
         #
 
-        #Etablit les positions de l'axe y ou ils commencent:
+        #On etablit les positions de l'axe y ou ils commencent:
         y1_att = 0
         y2_att = 50
 
@@ -224,29 +223,29 @@ class fen():
 
         for i in range(self.nombre_aliens):
 
-            #Etablit les limites des cadres dans lequelles les aliens peuvent circuler
+            #On etablit les limites des cadres dans lequelles les aliens peuvent circuler
             mini = (int(self.canvas_longeur)/self.nombre_aliens)*i
             maxi = (int(self.canvas_longeur)/self.nombre_aliens)*(i+1)
 
             xinf = mini + (maxi-mini)/3         #Position initiale du point x1
             xsup = mini + ((maxi-mini)*2)/3     #Position intitale du point x2
 
-            #Genere l'esprit de l'alien
+            #On genere l'esprit de l'alien
             alien_att = alien(self.canvas_longeur,self.canvas_largeur,xinf,y1_att,xsup,y2_att,"black",mini,maxi)
             alien_def = alien(self.canvas_longeur,self.canvas_largeur,xinf,y1_def,xsup,y2_def,"red",mini,maxi)
 
-            #Genere le corps de l'alien
+            #On genere le corps de l'alien
             corps_alien_def = self.canvas.create_rectangle(alien_def.x1,alien_def.y1,alien_def.x2,alien_def.y2, fill = alien_def.color_fill)
             corps_alien_att = self.canvas.create_rectangle(alien_att.x1,alien_att.y1,alien_att.x2,alien_att.y2, fill = alien_att.color_fill)
             
             id_att = self.GenererId(self.aliens_att)
             id_def = self.GenererId(self.aliens_def)
 
-            #Ajoute les differents aliens au dictionnaire des aliens
+            #On ajoute les differents aliens au dictionnaire des aliens
             self.aliens_def[id_def] = alien_def
             self.aliens_att[id_att] = alien_att
 
-            #Ajoute les corps des differents aliens au dictionnaire des corps d'aliens
+            #On ajoute les corps des differents aliens au dictionnaire des corps d'aliens
             self.corps_aliens_att[id_att] = corps_alien_att
             self.corps_aliens_def[id_def] = corps_alien_def
 
@@ -261,7 +260,7 @@ class fen():
         """Genere les differentes composantes d'un projectile"""
         #_
 
-        #Genere un projectile sur le canvas
+        #On genere un projectile sur le canvas
         projectile1 = projectile(self.canvas_longeur,self.canvas_largeur,x,y, tir_ami,color)
         corps_projectile = self.canvas.create_rectangle(projectile1.x1,projectile1.y1,projectile1.x2,projectile1.y2, fill=projectile1.color)
         
@@ -269,7 +268,7 @@ class fen():
         
         self.projectiles[id_proj] = projectile1                                               #Ajoute l'esprit du projectile
         
-        self.corps_projectiles[id_proj] = corps_projectile   #Ajoute les corps du projectile
+        self.corps_projectiles[id_proj] = corps_projectile   #On ajoute les corps du projectile
     
     def GenererTirAmi(self,event):
         """Evenement ou il y a un projetile amis"""
@@ -281,7 +280,7 @@ class fen():
 
     
 
-    #Mettre ici les fonction creant l'indentite de l'objet
+    #Fonction creant l'indentite de l'objet
     #_
 
     def GenererId(self, dictionaire):
@@ -296,7 +295,7 @@ class fen():
                 Boucle = False
                 return rand
 
-    #Mettre ici les fonction detruisant les objets
+    #Fonction detruisant les objets
     #_
 
 
@@ -348,7 +347,7 @@ class fen():
                 self.SupprimerBlock(id_bl)
             self.id_bl_suppr = []
 
-    #Fonction de verification des coordonnes: Permet de savoir si c'est perdu
+    #Fonction de verification des coordonnes: Permet de savoir si la partie est perdue
     #
 
     def VerifCoord(self):
@@ -368,14 +367,14 @@ class fen():
 
                     if self.projectiles[id].GetEkip():                                        #Si le projectile est un tir ami
 
-                        for id_al in self.aliens_att.keys():                                  #Verifie si le tir touche un alien de defense
+                        for id_al in self.aliens_att.keys():                                  #On verifie si le tir touche un alien de defense
                             if self.aliens_att[id_al].IsColliding(self.projectiles[id].GetPoints()):
                                 if id_al not in self.al_att_suppr:
                                     self.al_att_suppr.append(id_al)     
                                 if id not in self.proj_suppr:
                                     self.proj_suppr.append(id) 
                         
-                        for id_al in self.aliens_def.keys():                                 #Verifie si le tir touche un alien de defense
+                        for id_al in self.aliens_def.keys():                                 #On verifie si le tir touche un alien de defense
                             if self.aliens_def[id_al].IsColliding(self.projectiles[id].GetPoints()):
                                 if id_al not in self.al_def_suppr:
                                     self.al_def_suppr.append(id_al)
@@ -393,7 +392,7 @@ class fen():
                                 if id not in self.proj_suppr:
                                     self.proj_suppr.append(id) 
                         
-                        #Verifie si le vaisseau est touche par un projectile
+                        #On verifie si le vaisseau est touche par un projectile
                         if self.vaisseau.IsColliding(self.projectiles[id].GetPoints()):     #Si est dans la zone du vaisseau
                             if self.vies > 1:                                                 #Si le vaisseau a assez de vies le jeu continue
                                 self.vies += -1
